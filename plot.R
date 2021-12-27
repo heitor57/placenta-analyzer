@@ -1,0 +1,13 @@
+  require(ggplot2)
+  require(ggpmisc)
+    Data <- read.table("../data/data.txt")
+    #perfectData <- read.table("data/perfect-data.txt")
+    names(Data) <- c("Paradigma","OrdemMatrizEntrada", "OrdemSubmatrizCerta","OrdemObtida","Tempo","Tipo")
+    #names(perfectData) <- c("Time", "Type","Objects","Maneuvers")
+    Data<- subset(Data,Tipo=="total")
+    Data<- subset(Data,Paradigma=="g")
+    Data<- subset(Data,OrdemMatrizEntrada != OrdemSubmatrizCerta)
+    Data<- subset(Data,1 !=OrdemSubmatrizCerta)
+  Data$Acerto = Data$OrdemObtida/Data$OrdemSubmatrizCerta
+    #perfectData<- subset(perfectData,Type=="total")
+  boxplot(Data$Acerto,col = "lightgray",ylab = "Acerto %") 

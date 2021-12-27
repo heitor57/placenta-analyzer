@@ -1,0 +1,50 @@
+#!/bin/bash
+
+
+if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]
+then
+    echo "$0 <order min> <order max> <dot name>"
+    exit
+fi
+
+OrderMin=$1
+OrderMax=$2
+DotName=$3
+declare -a paradigms=("b" "g" "n")
+RootDir=data/
+mkdir -p $RootDir
+# for((i=$OrderMin;i<=$OrderMax;i++))
+# do
+#     f="$RootDir"inOrder"$i".$(date +"%d%m%y%H%m%S%N")
+#     create-matrix $i 50 > $f
+# done
+
+# dirfiles=""    
+# a=inOrder{$OrderMin..$OrderMax}
+# for n in $(seq $OrderMin $OrderMax); do
+#     dirfiles="$dirfiles"$(ls -d $RootDir* | grep -P "inOrder$n\.")"
+# "
+# done
+# echo "$dirfiles"
+for f in $(seq -f "$RootDir/inOrder%g.$DotName" $OrderMin $OrderMax); do
+    i=$(echo $f | grep -Po 'inOrder\d+' |grep -Po '\d+')
+    output=$(./tp2 -i $f -o out.txt -d -p d)
+    values=$(echo "$output" | awk '/Total Time/{print $3 $6 $9}'| grep -o '[0-9]\+.[0-9]\+')
+    resultC=$(echo "$output" | awk '/Max order/{print $3}')
+    result=$resultC
+    echo "d $i $resultC $result "$(echo "$values" | sed -n '1p')" usr">> "$RootDir""data.txt"
+    echo "d $i $resultC $result "$(echo "$values" | sed -n '2p')" sys">> "$RootDir""data.txt"
+    echo "d $i $resultC $result "$(echo "$values" | sed -n '3p')" total">> "$RootDir""data.txt"
+
+    ## now loop through the paradigms
+    for p in "${paradigms[@]}"
+    do
+	output=$(./tp2 -i $f -o out.txt -d -p $p)
+	values=$(echo "$output" | awk '/Total Time/{print $3 $6 $9}'| grep -o '[0-9]\+.[0-9]\+')
+	result=$(echo "$output" | awk '/Max order/{print $3}')
+	echo "$p $i $resultC $result "$(echo "$values" | sed -n '1p')" usr">> "$RootDir""data.txt"
+	echo "$p $i $resultC $result "$(echo "$values" | sed -n '2p')" sys">> "$RootDir""data.txt"
+	echo "$p $i $resultC $result "$(echo "$values" | sed -n '3p')" total">> "$RootDir""data.txt"
+    done
+    
+done

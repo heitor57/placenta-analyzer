@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]
+then
+    echo "$0 <order min> <order max> <dot name>"
+    exit
+fi
+
+OrderMin=$1
+OrderMax=$2
+DotName=$3
+declare -a paradigms=("b" "g" "n")
+RootDir=data/
+mkdir -p $RootDir
+#valgrind ./tp2 -i data/inOrder500.full -p d 2>&1 >/dev/null | grep -P 'total heap usage' | awk '{print $9}' | sed 's/,//g'
+for f in $(seq -f "$RootDir/inOrder%g.$DotName" $OrderMin $OrderMax); do
+    i=$(echo $f | grep -Po 'inOrder\d+' |grep -Po '\d+')
+    output=$(valgrind ./tp2 -i $f -o out.txt -p d 2>&1 >/dev/null | grep -P 'total heap usage' | awk '{print $9}' | sed 's/,//g')
+    echo "d $i $output" >> "$RootDir""mem.txt"
+    ## now loop through the paradigms
+    for p in "${paradigms[@]}"
+    do
+	output=$(valgrind ./tp2 -i $f -o out.txt -p $p 2>&1 >/dev/null | grep -P 'total heap usage' | awk '{print $9}' | sed 's/,//g')
+	echo "$p $i $output" >> "$RootDir""mem.txt"
+    done
+    
+done

@@ -1,0 +1,49 @@
+#!/bin/bash
+
+create-matrix (){
+    if [ -z "$1" ] || [ -z "$2" ]
+    then
+	echo "$0 <Size of square matrix> <chance 1>"
+	exit
+    fi
+    local N=$1
+    local chanceTo1=$2
+    local result=""
+    for((i=0;i<$N;i++))
+    do
+	for((j=0;j<$N;j++))
+	do
+	    if [ "$((RANDOM % 100 + 1))" -le $chanceTo1 ]
+	    then
+		result=$result"1 "
+	    else
+		result=$result"0 "
+	    fi
+	    
+	done
+	result=${result%?}
+	result=$result"
+"
+
+    done
+    result=${result%?}
+    echo "$result"
+}
+
+if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]
+then
+    echo "$0 <order min> <order max> <1 chance [0..100]> <dot name>"
+    exit
+fi
+
+OrderMin=$1
+OrderMax=$2
+Chance=$3
+DotName=$4
+RootDir=data/
+mkdir -p $RootDir
+for((i=$OrderMin;i<=$OrderMax;i++))
+do
+    f="$RootDir"inOrder"$i".$DotName
+    ./matrixgenerator $f $i $Chance
+done
