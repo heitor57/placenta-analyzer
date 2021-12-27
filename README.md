@@ -25,9 +25,9 @@ To skip the question of which paradigm to use, just use the parameter p with som
 
 The program input should have the following pattern:
 
-1 1 1 1
-1 1 1 0
-1 1 1 1
-1 0 1 0
+    1 1 1 1
+    1 1 1 0
+    1 1 1 1
+    1 0 1 0
 
 Every line must have a '\n' at the end.
