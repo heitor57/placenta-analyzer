@@ -18,16 +18,16 @@
 	tp2 -i in.txt -o out.txt
 	tp2 -i in.txt
 
-As opções prováveis a serem mais utilizadas são o i,o e p
-Caso queira passar somente o arquivo de entrada como parâmetro é possível, e isso fará com que a saída seja na saída padrão e o paradigma a ser utilizado irá se perguntado durante a execução.
-Para pular a pergunta de qual paradigma a ser utilizado basta utilizar o parametro p com algum paradigma (b,d,g,n) ou todos (a).
+The most likely options to be used are i, o and p.
+In case you only want to pass the input file as a parameter, it is possible, and that will make the output be in the standard output and the paradigm to be used will be asked during the execution.
+To skip the question of which paradigm to use, just use the parameter p with some paradigm (b,d,g,n) or all (a).
 
 
-A entrada do programa deve ter o seguinte padrão:
+The program input should have the following pattern:
 
 1 1 1 1
 1 1 1 0
 1 1 1 1
 1 0 1 0
 
-Toda linha deve ter um '\n' no final.
+Every line must have a '\n' at the end.
