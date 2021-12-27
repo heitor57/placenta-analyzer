@@ -28,7 +28,7 @@ mkdir -p $RootDir
 # echo "$dirfiles"
 for f in $(seq -f "$RootDir/inOrder%g.$DotName" $OrderMin $OrderMax); do
     i=$(echo $f | grep -Po 'inOrder\d+' |grep -Po '\d+')
-    output=$(./tp2 -i $f -o out.txt -d -p d)
+    output=$(./placenta-analyzer -i $f -o out.txt -d -p d)
     values=$(echo "$output" | awk '/Total Time/{print $3 $6 $9}'| grep -o '[0-9]\+.[0-9]\+')
     resultC=$(echo "$output" | awk '/Max order/{print $3}')
     result=$resultC
@@ -39,7 +39,7 @@ for f in $(seq -f "$RootDir/inOrder%g.$DotName" $OrderMin $OrderMax); do
     ## now loop through the paradigms
     for p in "${paradigms[@]}"
     do
-	output=$(./tp2 -i $f -o out.txt -d -p $p)
+	output=$(./placenta-analyzer -i $f -o out.txt -d -p $p)
 	values=$(echo "$output" | awk '/Total Time/{print $3 $6 $9}'| grep -o '[0-9]\+.[0-9]\+')
 	result=$(echo "$output" | awk '/Max order/{print $3}')
 	echo "$p $i $resultC $result "$(echo "$values" | sed -n '1p')" usr">> "$RootDir""data.txt"

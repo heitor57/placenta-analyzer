@@ -12,13 +12,13 @@ DotName=$3
 declare -a paradigms=("d" "b" "g" "n")
 RootDir=data/
 mkdir -p $RootDir
-#valgrind ./tp2 -i data/inOrder500.full -p d 2>&1 >/dev/null | grep -P 'total heap usage' | awk '{print $9}' | sed 's/,//g'
+#valgrind ./placenta-analyzer -i data/inOrder500.full -p d 2>&1 >/dev/null | grep -P 'total heap usage' | awk '{print $9}' | sed 's/,//g'
 for f in $(seq -f "$RootDir/inOrder%g.$DotName" $OrderMin $OrderMax); do
     i=$(echo $f | grep -Po 'inOrder\d+' |grep -Po '\d+')
     ## now loop through the paradigms
     for p in "${paradigms[@]}"
     do
-	output=$(./tp2 -i $f -o out.txt -d -p $p)
+	output=$(./placenta-analyzer -i $f -o out.txt -d -p $p)
 	values=$(echo "$output" | awk '/Total Time/{print $3 $6 $9}'| grep -o '[0-9]\+.[0-9]\+')
 	echo "$p $i "$(echo "$values" | sed -n '3p')>> "$RootDir""randdata.txt"
     done

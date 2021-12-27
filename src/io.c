@@ -4,13 +4,13 @@
 bool DEBUG = false;
 char PARADIGM = ' ';
 void printUsage(){
-  printf("tp2 -i <entry file> -o <out file> -d (DEBUG) -p <Paradigm>\n"
+  printf("placenta-analyzer -i <entry file> -o <out file> -d (DEBUG) -p <Paradigm>\n"
     "Possible paradigms\n"
     "-p b(Brute Force) d(Dynamic programming) g(Greedy)\n"
     "-p n(Branch and bound) a(All)\n"
-    "Examples: tp2 -i in.txt -o out.txt -d -p d\n"
-    "tp2 -i in.txt -o out.txt\n"
-    "tp2 -i in.txt\n");
+    "Examples: placenta-analyzer -i in.txt -o out.txt -d -p d\n"
+    "placenta-analyzer -i in.txt -o out.txt\n"
+    "placenta-analyzer -i in.txt\n");
   exit(ENOENT);
 }
 
